@@ -39,7 +39,6 @@ module Guard
       end
       
       def clean
-        FileUtils.rm_rf @assets_path, :secure => true
       end
       
       def compile
@@ -53,10 +52,9 @@ module Guard
             end
 
             if asset = @sprockets.find_asset(logical_path)
-              filename = target.join(asset.digest_path)
+              filename = target.join(asset.logical_path)
               FileUtils.mkdir_p filename.dirname
               asset.write_to(filename)
-              asset.write_to("#{filename}.gz") if filename.to_s =~ /\.(css|js)$/
             end
           end
         end
