@@ -69,7 +69,9 @@ module Guard
       time_taken = time do
         @compiler.compile
       end
-      UI.info "completed in #{time_taken} seconds"
+      msg = "completed in #{time_taken} seconds"
+      UI.info msg
+      Notifier.notify(msg, :title => 'Sprockets compile')
     end
     
     def time(&block)
