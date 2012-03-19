@@ -74,7 +74,7 @@ module Guard
       msg = "completed in #{time_taken} seconds"
       UI.info msg
       Notifier.notify(msg, :title => 'Sprockets compile')
-    rescue => e
+    rescue ExecJS::ProgramError => e
       UI.error e
       Notifier.notify('Error compiling assets!', :title => 'Sprockets compile', :type => :error)
     end
