@@ -65,13 +65,19 @@ module Guard
     
     def compile_assets
       @compiler.clean
-      print "Compiling assets... " unless ENV["GUARD_ENV"] == "test"
+      msg = "Compiling assets... "
+      print msg unless ENV["GUARD_ENV"] == "test"
+      Notifier.notify(msg, :title => 'Sprockets compile')
       time_taken = time do
         @compiler.compile
       end
       msg = "completed in #{time_taken} seconds"
       UI.info msg
       Notifier.notify(msg, :title => 'Sprockets compile')
+    rescue => e
+      p e
+      puts e.backtrace.join("\n")
+      Notifier.error('Error compiling assets!', :title => 'Sprockets compile')
     end
     
     def time(&block)
