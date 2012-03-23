@@ -75,8 +75,9 @@ module Guard
       UI.info msg
       Notifier.notify(msg, :title => 'Sprockets compile')
     rescue ExecJS::ProgramError => e
-      UI.error e.inspect
-      Notifier.notify('Error compiling assets!', :title => 'Sprockets compile', :type => :error)
+      UI.error e.to_s
+      puts e.backtrace.join("\n")
+      Notifier.notify('Error compiling assets!', :title => 'Sprockets compile', :image => :error)
     end
     
     def time(&block)
